@@ -32,7 +32,9 @@ public class RestaurantService {
         MongoDatabase restaurantsDataStore = mongoClient.getDatabase(SAMPLE_DATABASE);
         MongoCollection<Document> restaurantsCollection = restaurantsDataStore.getCollection(SAMPLE_COLLECTION);
 
-        for (Document document : restaurantsCollection.find().limit(10)) {
+        Bson sort = Filters.eq("name", -1);
+
+        for (Document document : restaurantsCollection.find().sort(sort).limit(500)) {
             documents.add(document);
         }
 

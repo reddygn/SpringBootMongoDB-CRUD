@@ -19,7 +19,7 @@ import static com.naveen.Spring_mongodb_crud.util.SpringBootMongoConstants.SAMPL
  */
 
 @Service
-public class MongoService {
+public class RestaurantService {
 
 
     MongoConnectionConfig mongoConnectionConfig = new MongoConnectionConfig();

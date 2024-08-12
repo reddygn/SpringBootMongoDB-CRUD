@@ -1,6 +1,6 @@
 package com.naveen.Spring_mongodb_crud.controller;
 
-import com.naveen.Spring_mongodb_crud.service.MongoService;
+import com.naveen.Spring_mongodb_crud.service.RestaurantService;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,11 +13,11 @@ import java.util.List;
  */
 @RequestMapping("/api/restaurants")
 @RestController
-public class MongoController {
+public class RestaurantController {
 
 
     @Autowired
-    MongoService mongoService;
+    RestaurantService mongoService;
 
 
     @GetMapping(value = "")

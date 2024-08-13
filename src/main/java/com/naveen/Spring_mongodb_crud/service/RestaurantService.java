@@ -9,7 +9,9 @@ import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.mongodb.client.model.Filters.eq;
 import static com.naveen.Spring_mongodb_crud.util.SpringBootMongoConstants.SAMPLE_COLLECTION;
@@ -78,6 +80,16 @@ public class RestaurantService {
         InsertOneResult response = restaurantsCollection.insertOne(inputData);
 
         return response.wasAcknowledged();
+    }
+
+    public Map<String, Long> getTotalDocument(String collectioName) {
+
+        long totalDocs = restaurantsDataStore.getCollection(collectioName).countDocuments();
+
+        Map<String, Long> map = new HashMap<>();
+        map.put(collectioName, totalDocs);
+
+        return map;
     }
 }
 

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Naveen Reddy
@@ -45,4 +46,8 @@ public class RestaurantController {
         return mongoService.addRestaurant(inputData);
     }
 
+    @GetMapping("/{collectioName}/count")
+    public Map<String, Long> getTotalDocument(@PathVariable String collectioName) {
+        return mongoService.getTotalDocument(collectioName);
+    }
 }

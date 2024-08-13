@@ -1,6 +1,7 @@
 package com.naveen.Spring_mongodb_crud.service;
 
 import com.mongodb.client.*;
+import com.mongodb.client.result.InsertOneResult;
 import com.naveen.Spring_mongodb_crud.util.MongoConnectionConfig;
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -22,17 +23,16 @@ import static com.naveen.Spring_mongodb_crud.util.SpringBootMongoConstants.SAMPL
 @Service
 public class RestaurantService {
 
-
     MongoConnectionConfig mongoConnectionConfig = new MongoConnectionConfig();
     MongoClient mongoClient = mongoConnectionConfig.mongoClient();
+
+    MongoDatabase restaurantsDataStore = mongoClient.getDatabase(SAMPLE_DATABASE);
+    MongoCollection<Document> restaurantsCollection = restaurantsDataStore.getCollection(SAMPLE_COLLECTION);
 
 
     public List<Document> getAllRestaurants() {
 
         List<Document> documents = new ArrayList<>();
-        MongoDatabase restaurantsDataStore = mongoClient.getDatabase(SAMPLE_DATABASE);
-        MongoCollection<Document> restaurantsCollection = restaurantsDataStore.getCollection(SAMPLE_COLLECTION);
-
         Bson sort = eq("name", -1);
 
         for (Document document : restaurantsCollection.find().sort(sort).limit(500)) {
@@ -44,9 +44,6 @@ public class RestaurantService {
     public List<Document> getRestaurantsById(long id) {
 
         List<Document> documents = new ArrayList<>();
-        MongoDatabase restaurantsDataStore = mongoClient.getDatabase(SAMPLE_DATABASE);
-        MongoCollection<Document> restaurantsCollection = restaurantsDataStore.getCollection(SAMPLE_COLLECTION);
-
         Bson filter = eq("restaurant_id", String.valueOf(id));
         FindIterable<Document> results = restaurantsCollection.find(filter);
 
@@ -59,9 +56,6 @@ public class RestaurantService {
     public List<Document> getRestaurantsByCuisine(String cuisine) {
 
         List<Document> documents = new ArrayList<>();
-        MongoDatabase restaurantsDataStore = mongoClient.getDatabase(SAMPLE_DATABASE);
-        MongoCollection<Document> restaurantsCollection = restaurantsDataStore.getCollection(SAMPLE_COLLECTION);
-
         Bson filter = eq("cuisine", cuisine);
         FindIterable<Document> results = restaurantsCollection.find(filter).limit(5);
 
@@ -73,13 +67,17 @@ public class RestaurantService {
 
     public Document updateRestaurant(Document inputData, String id) {
 
-        MongoDatabase restaurantsDataStore = mongoClient.getDatabase(SAMPLE_DATABASE);
-        MongoCollection<Document> restaurantsCollection = restaurantsDataStore.getCollection(SAMPLE_COLLECTION);
-
         Bson filter = eq("_id", new ObjectId(id));
         Document set = new Document("$set", new Document(inputData));
 
         return restaurantsCollection.findOneAndUpdate(filter, set);
+    }
+
+    public boolean addRestaurant(Document inputData) {
+
+        InsertOneResult response = restaurantsCollection.insertOne(inputData);
+
+        return response.wasAcknowledged();
     }
 }
 

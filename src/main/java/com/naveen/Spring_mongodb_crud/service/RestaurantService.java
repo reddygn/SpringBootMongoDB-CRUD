@@ -71,7 +71,7 @@ public class RestaurantService {
         return documents;
     }
 
-    public Document addRestaurant(Document inputData, String id) {
+    public Document updateRestaurant(Document inputData, String id) {
 
         MongoDatabase restaurantsDataStore = mongoClient.getDatabase(SAMPLE_DATABASE);
         MongoCollection<Document> restaurantsCollection = restaurantsDataStore.getCollection(SAMPLE_COLLECTION);

@@ -40,8 +40,8 @@ public class RestaurantController {
     }
 
     @PostMapping("/{id}")
-    public Document addRestaurant(@RequestBody Document inputData, @PathVariable String id) {
-        return mongoService.addRestaurant(inputData, id);
+    public Document updateRestaurant(@RequestBody Document inputData, @PathVariable String id) {
+        return mongoService.updateRestaurant(inputData, id);
     }
 
 }

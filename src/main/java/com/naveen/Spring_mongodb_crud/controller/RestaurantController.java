@@ -1,11 +1,15 @@
 package com.naveen.Spring_mongodb_crud.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.naveen.Spring_mongodb_crud.service.RestaurantService;
 import org.bson.Document;
+import org.bson.json.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.print.Doc;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Naveen Reddy
@@ -33,6 +37,11 @@ public class RestaurantController {
     @GetMapping(value = "/cuisine/{cuisineName}")
     public List<Document> getRestaurantsByCuisine(@PathVariable String cuisineName) {
         return mongoService.getRestaurantsByCuisine(cuisineName);
+    }
+
+    @PostMapping("/{id}")
+    public Document addRestaurant(@RequestBody Document inputData, @PathVariable String id) {
+        return mongoService.addRestaurant(inputData, id);
     }
 
 }

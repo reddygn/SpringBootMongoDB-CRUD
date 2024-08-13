@@ -39,7 +39,7 @@ public class RestaurantController {
         return mongoService.getRestaurantsByCuisine(cuisineName);
     }
 
-    @PostMapping("/{id}")
+    @PutMapping("/{id}")
     public Document updateRestaurant(@RequestBody Document inputData, @PathVariable String id) {
         return mongoService.updateRestaurant(inputData, id);
     }

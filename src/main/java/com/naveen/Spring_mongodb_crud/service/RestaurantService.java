@@ -6,6 +6,7 @@ import com.naveen.Spring_mongodb_crud.util.MongoConnectionConfig;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -25,11 +26,16 @@ import static com.naveen.Spring_mongodb_crud.util.SpringBootMongoConstants.SAMPL
 @Service
 public class RestaurantService {
 
-    MongoConnectionConfig mongoConnectionConfig = new MongoConnectionConfig();
-    MongoClient mongoClient = mongoConnectionConfig.mongoClient();
+    private MongoClient mongoClient;
+    private final MongoDatabase restaurantsDataStore;
+    private final MongoCollection<Document> restaurantsCollection;
 
-    MongoDatabase restaurantsDataStore = mongoClient.getDatabase(SAMPLE_DATABASE);
-    MongoCollection<Document> restaurantsCollection = restaurantsDataStore.getCollection(SAMPLE_COLLECTION);
+    @Autowired
+    public RestaurantService(MongoClient mongoClient) {
+        this.mongoClient = mongoClient;
+        restaurantsDataStore = mongoClient.getDatabase(SAMPLE_DATABASE);
+        restaurantsCollection = restaurantsDataStore.getCollection(SAMPLE_COLLECTION);
+    }
 
 
     public List<Document> getAllRestaurants() {

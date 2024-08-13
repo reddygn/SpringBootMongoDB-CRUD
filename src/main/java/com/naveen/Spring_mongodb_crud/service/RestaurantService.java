@@ -82,12 +82,12 @@ public class RestaurantService {
         return response.wasAcknowledged();
     }
 
-    public Map<String, Long> getTotalDocument(String collectioName) {
+    public Map<String, Long> getTotalDocument(String collectionName) {
 
-        long totalDocs = restaurantsDataStore.getCollection(collectioName).countDocuments();
+        long totalDocs = restaurantsDataStore.getCollection(collectionName).countDocuments();
 
         Map<String, Long> map = new HashMap<>();
-        map.put(collectioName, totalDocs);
+        map.put(collectionName, totalDocs);
 
         return map;
     }

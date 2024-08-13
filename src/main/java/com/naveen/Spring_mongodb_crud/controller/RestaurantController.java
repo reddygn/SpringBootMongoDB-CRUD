@@ -46,8 +46,8 @@ public class RestaurantController {
         return mongoService.addRestaurant(inputData);
     }
 
-    @GetMapping("/{collectioName}/count")
-    public Map<String, Long> getTotalDocument(@PathVariable String collectioName) {
-        return mongoService.getTotalDocument(collectioName);
+    @GetMapping("/{collectionName}/count")
+    public Map<String, Long> getTotalDocument(@PathVariable String collectionName) {
+        return mongoService.getTotalDocument(collectionName);
     }
 }
